@@ -1,0 +1,44 @@
+import socket
+
+"""make a chatting by class"""
+
+class chatting_server:
+    def init(self):
+        HOST = ''
+        PORT = 50000
+        self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.s.bind((HOST,PORT))
+        
+        """Function bind() allow the server socket 's' start server by
+            The HOST(sever-side socket)and PORT(port number)"""
+        self.s.listen(1)
+
+        print('please waiting')
+
+        conn,addr = self.s.accept() 
+        print('connected by',addr)
+
+        """check for access server"""
+   
+        name = conn.recv(10)
+        """recevied client's sentence. so name is nickname in client"""
+
+        data = '***'+name+' is log in now'
+        print(data)
+
+
+        """this is for chatting using send(), recv()"""
+        while data:
+            if(data == 'exit'):
+                print("종료합니다.")
+                break
+            conn.send(data)
+            data = name+' :  ' + conn.recv(1024)
+            print(data)
+           
+           
+        conn.close()
+
+
+        
+            
